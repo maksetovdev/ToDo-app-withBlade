@@ -1,8 +1,7 @@
 <?php
-namespace App\Services\AddTask;
+namespace App\Services;
 
 use App\Services\BaseService;
-use Illuminate\Support\Facades\Validator;
 use App\Models\Task;
 
 class AddTask extends BaseService 
@@ -15,9 +14,10 @@ class AddTask extends BaseService
         ];
     }
     public function execute($data) : bool
-    {
-        Validator::make($data, $this->rules())->validate();
-        
+    {   //dd($data);
+        //Validator::make($data, $this->rules())->validate();
+        $this->validate($data);
+        dd($data);
         Task::create([
           'title' => $data['title'],
           'description' => $data['description']

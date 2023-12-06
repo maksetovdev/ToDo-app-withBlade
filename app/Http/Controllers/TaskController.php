@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Task;
-use App\Services\AddTask\AddTask;
+use App\Services\AddTask;
+use Illuminate\Validation\ValidationException;
 
 
 class TaskController extends Controller
@@ -22,17 +22,17 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {      
-        //! TRY CATCH islew kk!
-        // tyr{
-        //     app(AddTask::class)->execute($request->all());
-        //     return "Successfully added";
-        // }
-        // catch(ValidationException $error)
-        //    {
-        //        return response([
-        //            'errors' => $error->validator->errors()->all() 
-        //        ], 422);
-        //    }
+        // TRY CATCH islew kk!
+        try{
+            app(AddTask::class)->execute($request->all());
+            return "Successfully added";
+        }
+        catch(ValidationException $error)
+           {
+               return response([
+                   'errors' => $error->validator->errors()->all() 
+               ], 422);
+           }
     }
 
     /**
