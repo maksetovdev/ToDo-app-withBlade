@@ -6,22 +6,19 @@ use App\Models\Task;
 use Illuminate\Http\Request;
 use App\Services\AddTask;
 use App\Services\DeleteTask;
+use App\Services\UpdateTask;
 use Illuminate\Validation\ValidationException;
-
+use Monolog\Handler\RotatingFileHandler;
 
 class TaskController extends Controller
 {
-    
     public function index()
     {
         $res = Task::all();
         return view('welcome',['tasks' => $res]);
     }
-
-    
     public function store(Request $request)
     {      
-        // TRY CATCH islew kk!
         try{
             app(AddTask::class)->execute($request->all());
             return redirect(route('index'));
@@ -33,18 +30,26 @@ class TaskController extends Controller
                 ], 422);
             }
     }
-
-    public function show(string $id)
-    {
-        //
-    }
-
     public function update(Request $request, string $id)
-    {
-        return 'Tez arada';
+    {   
+        try
+            {
+            //dd($request);
+            app(UpdateTask::class)->execute([
+                'id' => $id,
+                'title' => $request->title,
+                'description' => $request->description
+            ]);
+            return redirect(route('index'));
+            //dd($request);
+            }
+        catch(ValidationException $error)
+            {
+                return response([
+                    'errors' => $error->validator->errors()->all() 
+                ], 422);
+            }
     }
-
-    
     public function destroy(string $id)
     {
         try
