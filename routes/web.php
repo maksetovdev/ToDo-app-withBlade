@@ -7,11 +7,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [TaskController::class,'index'])->name('index');
 
-
 Route::get('/AddTask', function () {
     return view('addTask');
 })->name('addTask');
 
-
 Route::post('/add_task',[TaskController::class,'store'])->name('add_task');
 
+Route::get('/delete/{id}',[TaskController::class,'destroy'])->name('delete');
+
+Route::get('/update/{id}',[TaskController::class,'update'])->name('update');

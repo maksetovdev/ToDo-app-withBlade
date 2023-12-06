@@ -19,7 +19,15 @@
                   <th scope="row"><?= ++$k; ?></th>
                   <td><?=$val['title']; ?></td>
                   <td><?=$val['description']?></td>
-                  <td>@mdo</td>
+                  <td>
+                     <form action="{{route('delete',['id'=>$val['id']])}}" method="get">
+                            <input type="submit" value="Delete" class="btn btn-danger">
+                        </form>
+                            <br>
+                        <form action="{{route('update',['id'=>$val['id']])}}" method="get">
+                            <input type="submit" value="Update" class="btn btn-info">
+                        </form>
+                  </td>
                 </tr>
               @endforeach
           </tbody>

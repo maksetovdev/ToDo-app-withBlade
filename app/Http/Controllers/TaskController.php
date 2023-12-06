@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use Illuminate\Http\Request;
 use App\Services\AddTask;
+use App\Services\DeleteTask;
 use Illuminate\Validation\ValidationException;
 
 
@@ -23,37 +24,39 @@ class TaskController extends Controller
         // TRY CATCH islew kk!
         try{
             app(AddTask::class)->execute($request->all());
-            return "Successfully added";
+            return redirect(route('index'));
         }
         catch(ValidationException $error)
-           {
-               return response([
-                   'errors' => $error->validator->errors()->all() 
-               ], 422);
-           }
+            {
+                return response([
+                    'errors' => $error->validator->errors()->all() 
+                ], 422);
+            }
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        //
+        return 'Tez arada';
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
+    
     public function destroy(string $id)
     {
-        //
+        try
+        {
+            app(DeleteTask::class)->execute(['id' => $id]);
+            return redirect(route('index'));
+        }
+        catch(ValidationException $error)
+            {
+                return response([
+                    'errors' => $error->validator->errors()->all() 
+                ], 422);
+            }
     }
 }
