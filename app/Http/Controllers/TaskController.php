@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Task;
 use Illuminate\Http\Request;
 use App\Services\AddTask;
 use Illuminate\Validation\ValidationException;
@@ -9,17 +10,14 @@ use Illuminate\Validation\ValidationException;
 
 class TaskController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    
     public function index()
     {
-        //
+        $res = Task::all();
+        return view('welcome',['tasks' => $res]);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    
     public function store(Request $request)
     {      
         // TRY CATCH islew kk!

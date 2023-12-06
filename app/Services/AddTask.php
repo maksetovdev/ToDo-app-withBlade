@@ -9,15 +9,14 @@ class AddTask extends BaseService
     public function rules()
     {
         return [
-          'title'=>'required|255',
+          'title' => 'required',
           'description' => 'required'
         ];
     }
     public function execute($data) : bool
     {   //dd($data);
-        //Validator::make($data, $this->rules())->validate();
         $this->validate($data);
-        dd($data);
+        //dd($data);
         Task::create([
           'title' => $data['title'],
           'description' => $data['description']

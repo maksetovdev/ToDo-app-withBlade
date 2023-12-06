@@ -10,7 +10,7 @@ abstract class BaseService
     {
         return [];
     }
-    public function validate($data)
+    public function validate($data): bool
     {
         Validator::make($data, $this->rules())->validate();
         return true;
